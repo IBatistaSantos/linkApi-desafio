@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo-link-api
+    image: mongo:3
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodbdata:/data/db
+  api:
+    container_name: link-api-desafio
+    image: node:12
+    working_dir: /usr/src/link-api-desafio
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 3333:3333
+    volumes:
+      - ./dist/:/usr/src/link-api-desafio/dist/
+      - ./package.json:/usr/src/link-api-desafio/package.json
+    command: bash -c "yarn install --production && yarn debug"
+    environment:
+      MONGO_URL: 'mongodb://mongo:27017/linkApi'
+    links:
+      - mongo
+volumes:
+  mongodbdata:
