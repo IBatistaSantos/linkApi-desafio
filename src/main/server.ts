@@ -1,12 +1,5 @@
-import { MongoHelper } from "../infra/database/mongodb/helpers/mongoHelper";
-import database from "./config/database";
+import { app } from "./app";
 
-MongoHelper.connect(database.mongoUrl)
-  .then(async () => {
-    const app = await (await import("./config/app")).default;
+const port = process.env.PORT || 3000;
 
-    app.listen(process.env.PORT || 3333, () =>
-      console.log(`Server is running on port ${process.env.PORT || 3333}`)
-    );
-  })
-  .catch(console.error);
+app.listen(port, () => console.log(`Server is running on port ${port}`));

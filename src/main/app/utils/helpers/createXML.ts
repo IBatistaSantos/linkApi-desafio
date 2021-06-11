@@ -1,4 +1,4 @@
-import { CreateBusinessParams } from "../../../domain/useCases/CreateBusiness";
+import { CreateBusinessParams } from "../../../../domain/useCases/CreateBusiness";
 
 const createXML = (business: CreateBusinessParams): string => {
   const xml = `

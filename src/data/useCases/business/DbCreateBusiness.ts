@@ -3,7 +3,7 @@ import {
   ICreateBusiness,
 } from "../../../domain/useCases/CreateBusiness";
 import { IObjectTotalPerDayToSave } from "../../../domain/useCases/CreateDailyEarning";
-import { formatDate } from "../../../main/utils/helpers/formatDate";
+import { formatDate } from "../../../main/app/utils/helpers/formatDate";
 import IBusinessRepository from "../../protocols/db/IBusinessRepository";
 import IDailyEarningsRepository from "../../protocols/db/IDailyEarningsRepository";
 import IBlingProvider from "../../protocols/provider/IBlingProvider";

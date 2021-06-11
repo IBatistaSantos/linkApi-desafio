@@ -4,69 +4,56 @@ import {
   ICreateDailyEarning,
   ICreateOrUpdateDailyEarnings,
 } from "../../../../domain/useCases/CreateDailyEarning";
-import { formatDate } from "../../../../main/utils/helpers/formatDate";
-import { MongoHelper } from "../helpers/mongoHelper";
+import { formatDate } from "../../../../main/app/utils/helpers/formatDate";
+import { map, mapCollection } from "../helpers/mongoHelper";
+import { DailyEarnings } from "../schemas/DailyEarnings";
 
 class DailyEarningsRepository implements IDailyEarningsRepository {
   async findAll(): Promise<DailyEarningsModel[]> {
-    const dailyEarningsCollection = await MongoHelper.getCollection(
-      "dailyEarnings"
-    );
-    const dailyEarnings = await dailyEarningsCollection.find().toArray();
-    return dailyEarnings;
+    const dailyEarnings = await DailyEarnings.find();
+    return mapCollection<DailyEarningsModel>(dailyEarnings);
   }
 
   async findById(id: string): Promise<DailyEarningsModel> {
-    const dailyEarningsCollection = await MongoHelper.getCollection(
-      "dailyEarnings"
-    );
-    const dailyEarnings = await dailyEarningsCollection.findOne({ id });
-    return dailyEarnings;
+    const dailyEarnings = await DailyEarnings.findById(id);
+    return dailyEarnings ? map<DailyEarningsModel>(dailyEarnings) : undefined;
   }
   async findByDate(date: Date): Promise<DailyEarningsModel> {
-    const dailyEarningsCollection = await MongoHelper.getCollection(
-      "dailyEarnings"
-    );
-    const dailyEarnings = await dailyEarningsCollection.findOne({ date });
-    return dailyEarnings;
+    const dailyEarnings = await DailyEarnings.findOne({ date });
+    return dailyEarnings ? map<DailyEarningsModel>(dailyEarnings) : undefined;
   }
   async create(data: ICreateDailyEarning[]): Promise<DailyEarningsModel[]> {
-    const dailyEarningsCollection = await MongoHelper.getCollection(
-      "dailyEarnings"
-    );
-    const result = await dailyEarningsCollection.insertMany(data);
-    const [dailyEarnings] = result.ops;
-    return MongoHelper.map<DailyEarningsModel[]>(dailyEarnings);
+    const dailyEarnings = await DailyEarnings.insertMany(data);
+    return mapCollection<DailyEarningsModel>(dailyEarnings);
   }
   async createOrUpdate({
     objectTotalPerDaySaved,
     objectTotalPerDayToSave,
   }: ICreateOrUpdateDailyEarnings): Promise<void> {
-    const dailyEarningsCollection = await MongoHelper.getCollection(
-      "dailyEarnings"
-    );
-
     const totalPerDayCreated = Object.keys(objectTotalPerDayToSave).map(
       (key) => {
-        const newTotalPerDay = dailyEarningsCollection.insert({
+        const newTotalPerDay = DailyEarnings.create({
           day: objectTotalPerDayToSave[key].day,
           total: objectTotalPerDayToSave[key].total,
         });
 
-        return newTotalPerDay;
+        return map<DailyEarningsModel>(newTotalPerDay);
       }
     );
 
     const promiseFindSaved = Object.keys(objectTotalPerDaySaved).map((key) => {
       const day = formatDate(objectTotalPerDaySaved[key].day);
-      return dailyEarningsCollection.findOne({ day });
+      return DailyEarnings.findOne({ day });
     });
 
-    const promiseResolved = await Promise.all(promiseFindSaved);
+    const promiseResolved = await Promise.all(promiseFindSaved).then(() => {
+      return mapCollection<DailyEarningsModel>(promiseFindSaved);
+    });
+
     const days = Object.keys(objectTotalPerDaySaved);
     promiseResolved.forEach((daily) => {
       if (daily && days.includes(String(daily.day))) {
-        const findDaily = promiseResolved.find((p) => p?.day === daily.day);
+        const findDaily = promiseResolved.find((p) => p.day === daily.day);
         if (findDaily) {
           totalPerDayCreated.push({
             ...findDaily,
@@ -76,9 +63,7 @@ class DailyEarningsRepository implements IDailyEarningsRepository {
       }
     });
 
-    await Promise.all(
-      totalPerDayCreated.map((t) => dailyEarningsCollection.insert(t))
-    );
+    await Promise.all(totalPerDayCreated.map((t) => DailyEarnings.create(t)));
   }
 }
 

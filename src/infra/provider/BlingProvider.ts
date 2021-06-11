@@ -1,7 +1,7 @@
 import IBlingProvider from "../../data/protocols/provider/IBlingProvider";
 import { CreateBusinessParams } from "../../domain/useCases/CreateBusiness";
+import { createXML } from "../../main/app/utils/helpers/createXML";
 import configBling from "../../main/config/bling";
-import { createXML } from "../../main/utils/helpers/createXML";
 
 export default class BlingProvider implements IBlingProvider {
   public async createBusiness(data: CreateBusinessParams[]): Promise<void> {
