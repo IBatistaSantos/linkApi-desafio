@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import IBusinessRepository from "../../data/protocols/db/IBusinessRepository";
 import IPipedriveProvider, {
   IResponsePipedrive,
@@ -14,26 +16,34 @@ export default class PipedriveProvider implements IPipedriveProvider {
   }
 
   public async listAll(): Promise<IResponsePipedrive> {
-    const { data } = await (
-      await fetch(
-        `${configPipedrive.pipedriveUrl}/deals?api_token=${configPipedrive.pipedriveToken}`,
-        {
-          method: "GET",
-        }
+    const { data } = await axios
+      .get(
+        `${configPipedrive.pipedriveUrl}/deals?api_token=${configPipedrive.pipedriveToken}`
       )
-    ).json();
+      .catch((e) => {
+        throw new Error(e.message);
+      });
+
     if (!data) {
       throw new Error("Erro no Acesso ao Pipedrivre");
     }
 
+    const payload = data.data;
+    if (payload === null) {
+      return {
+        saved: [],
+        toSave: [],
+      };
+    }
     const dealsInDatabase: BusinessModel[] = await Promise.all(
-      data.map((d: IPipedrive) => this.businessRepositor.findByCode(d.id))
+      payload.map((d: IPipedrive) => {
+        this.businessRepositor.findByCode(d.id);
+      })
     );
 
     const dealsToSave: IPipedrive[] = [];
     const dealsSaved: IPipedrive[] = [];
-
-    data.forEach((deal: IPipedrive) => {
+    payload.forEach((deal: IPipedrive) => {
       if (deal.status === "won") {
         if (!dealsInDatabase.find((d) => d && d.code === deal.id)) {
           dealsToSave.push(deal);

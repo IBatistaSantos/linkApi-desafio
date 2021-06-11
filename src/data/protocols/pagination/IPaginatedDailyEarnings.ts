@@ -1,8 +1,10 @@
 import { DailyEarningsModel } from "../../../domain/models/DailyEarnings";
 
-export default interface IPaginatedDailyDTO {
+interface IPaginatedDailyEarnings {
   data: DailyEarningsModel[];
   page: number;
   limit: number;
   totalCount: number;
 }
+
+export { IPaginatedDailyEarnings };

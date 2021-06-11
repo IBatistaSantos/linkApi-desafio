@@ -9,3 +9,9 @@ export type HttpRequest = {
   params?: any;
   accountId?: string;
 };
+
+const makeResponse = (statusCode: number, body: any): HttpResponse => ({
+  statusCode,
+  body,
+});
+export const created = (body: any): HttpResponse => makeResponse(201, body);
