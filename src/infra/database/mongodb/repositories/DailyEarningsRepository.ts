@@ -1,12 +1,12 @@
-import { IPaginatedDailyEarnings } from "@/data/protocols/pagination/IPaginatedDailyEarnings";
-import IPagination from "@/data/protocols/pagination/IPagination";
+import { IPaginatedDailyEarnings } from "@/data/protocols/dailyEarning/pagination/IPaginatedDailyEarnings";
+import IPagination from "@/data/protocols/dailyEarning/pagination/IPagination";
 
-import IDailyEarningsRepository from "../../../../data/protocols/db/IDailyEarningsRepository";
-import { DailyEarningsModel } from "../../../../domain/models/DailyEarnings";
 import {
   ICreateDailyEarning,
   ICreateOrUpdateDailyEarnings,
-} from "../../../../domain/useCases/CreateDailyEarning";
+} from "../../../../data/protocols/dailyEarning/CreateDailyEarning";
+import IDailyEarningsRepository from "../../../../data/protocols/db/IDailyEarningsRepository";
+import { DailyEarningsModel } from "../../../../domain/models/DailyEarnings";
 import { formatDate } from "../../../../main/app/utils/helpers/formatDate";
 import { map, mapCollection } from "../helpers/mongoHelper";
 import { DailyEarnings } from "../schemas/DailyEarnings";

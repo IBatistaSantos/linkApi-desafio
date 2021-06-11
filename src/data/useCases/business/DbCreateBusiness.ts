@@ -2,8 +2,8 @@ import {
   CreateBusinessParams,
   ICreateBusiness,
 } from "../../../domain/useCases/CreateBusiness";
-import { IObjectTotalPerDayToSave } from "../../../domain/useCases/CreateDailyEarning";
 import { formatDate } from "../../../main/app/utils/helpers/formatDate";
+import { IObjectTotalPerDayToSave } from "../../protocols/dailyEarning/CreateDailyEarning";
 import IBusinessRepository from "../../protocols/db/IBusinessRepository";
 import IDailyEarningsRepository from "../../protocols/db/IDailyEarningsRepository";
 import IBlingProvider from "../../protocols/provider/IBlingProvider";

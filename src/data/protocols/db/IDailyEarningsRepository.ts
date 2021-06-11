@@ -1,11 +1,11 @@
 import {
   ICreateDailyEarning,
   ICreateOrUpdateDailyEarnings,
-} from "@/domain/useCases/CreateDailyEarning";
+} from "@/data/protocols/dailyEarning/CreateDailyEarning";
 
 import { DailyEarningsModel } from "../../../domain/models/DailyEarnings";
-import { IPaginatedDailyEarnings } from "../pagination/IPaginatedDailyEarnings";
-import IPagination from "../pagination/IPagination";
+import { IPaginatedDailyEarnings } from "../dailyEarning/pagination/IPaginatedDailyEarnings";
+import IPagination from "../dailyEarning/pagination/IPagination";
 
 export default interface IDailyEarningsRepository {
   findAll(): Promise<DailyEarningsModel[] | undefined>;
