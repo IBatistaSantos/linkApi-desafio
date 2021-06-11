@@ -7,6 +7,7 @@ export const adaptRoute = (controller: IController) => {
     const httpRequest: HttpRequest = {
       body: request.body,
       params: request.params,
+      query: request.query,
     };
 
     const httpResponse = await controller.handle(httpRequest);

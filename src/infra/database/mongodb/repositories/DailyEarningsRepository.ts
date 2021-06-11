@@ -17,8 +17,11 @@ class DailyEarningsRepository implements IDailyEarningsRepository {
     page = 1,
   }: IPagination): Promise<IPaginatedDailyEarnings> {
     const skip = (page - 1) * limit;
-    const dailyEarnings = await DailyEarnings.find().skip(skip).limit(limit);
-    const totalCount = DailyEarnings.length;
+    const dailyEarnings = await DailyEarnings.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+    const totalCount = await DailyEarnings.find().countDocuments();
 
     return {
       page,
