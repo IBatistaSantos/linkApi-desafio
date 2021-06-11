@@ -1,4 +1,4 @@
-import { DailyEarningsModel } from "../../../domain/models/DailyEarnings";
+import { DailyEarningsModel } from "../../../../domain/models/DailyEarnings";
 
 interface IPaginatedDailyEarnings {
   data: DailyEarningsModel[];
