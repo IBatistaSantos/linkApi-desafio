@@ -77,21 +77,14 @@ class DbCreateBusiness implements ICreateBusiness {
       } as CreateBusinessParams;
     });
 
-    const createPerDayPromise = this.dailyEarningsRepository.createOrUpdate({
+    await this.dailyEarningsRepository.createOrUpdate({
       objectTotalPerDayToSave,
       objectTotalPerDaySaved,
     });
 
-    const createBusinessPromise =
-      this.businessRepository.create(serealizedDeals);
+    await this.businessRepository.create(serealizedDeals);
 
-    const blingPromise = this.blingProvider.createBusiness(serealizedDeals);
-
-    await Promise.all([
-      createPerDayPromise,
-      createBusinessPromise,
-      blingPromise,
-    ]).catch(console.error);
+    await this.blingProvider.createBusiness(serealizedDeals);
   }
 }
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { helloRouter } from "./hello.routes";
+import { businessRouter } from "./business.routes";
 
 const routes = Router();
-routes.use("/hello", helloRouter);
+routes.use("/business", businessRouter);
 export { routes };
