@@ -8,7 +8,7 @@ export type BusinessModel = {
   client_email: string;
   client_phone: string;
   title: string;
-  add_time: string;
+  add_time: Date;
   value: number;
   currency: string;
   status: string;

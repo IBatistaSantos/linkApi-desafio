@@ -7,7 +7,7 @@ import { Business } from "../schemas/BusinessSchema";
 class BusinessRepository implements IBusinessRepository {
   async findAll(): Promise<BusinessModel[]> {
     const business = await Business.find();
-    return mapCollection<BusinessModel>(business);
+    return business ? mapCollection<BusinessModel>(business) : undefined;
   }
   async findById(id: string): Promise<BusinessModel> {
     const business = await Business.findById(id);
@@ -15,11 +15,11 @@ class BusinessRepository implements IBusinessRepository {
   }
   async findByCode(code: number): Promise<BusinessModel> {
     const business = await Business.findOne({ code });
-    return map<BusinessModel>(business);
+    return business ? map<BusinessModel>(business) : null;
   }
-  async create(data: CreateBusinessParams[]): Promise<BusinessModel[]> {
-    const business = await Business.insertMany(data);
-    return mapCollection<BusinessModel>(business);
+  async create(data: CreateBusinessParams): Promise<BusinessModel> {
+    const business = await Business.create(data);
+    return map<BusinessModel>(business);
   }
 }
 

@@ -18,7 +18,7 @@ interface IPipedrive {
     value: number;
   };
   title: string;
-  add_time: string;
+  add_time: Date;
   value: number;
   currency: string;
   status: string;

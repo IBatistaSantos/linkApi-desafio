@@ -5,5 +5,5 @@ export default interface IBusinessRepository {
   findAll(): Promise<BusinessModel[] | undefined>;
   findById(id: string): Promise<BusinessModel | undefined>;
   findByCode(code: number): Promise<BusinessModel | undefined>;
-  create(data: CreateBusinessParams[]): Promise<BusinessModel[]>;
+  create(data: CreateBusinessParams): Promise<BusinessModel>;
 }

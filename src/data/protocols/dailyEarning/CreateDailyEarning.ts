@@ -10,13 +10,15 @@ interface ITotalPerDay {
 interface IObjectTotalPerDayToSave {
   [key: string]: ITotalPerDay;
 }
-interface ICreateOrUpdateDailyEarnings {
-  objectTotalPerDayToSave: IObjectTotalPerDayToSave;
-  objectTotalPerDaySaved: IObjectTotalPerDayToSave;
+
+interface ICreateOrUpdateDailyEarning {
+  id?: string;
+  total: number;
+  day: Date;
 }
 
 export {
   ICreateDailyEarning,
   IObjectTotalPerDayToSave,
-  ICreateOrUpdateDailyEarnings,
+  ICreateOrUpdateDailyEarning,
 };

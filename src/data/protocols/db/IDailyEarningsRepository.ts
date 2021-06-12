@@ -1,6 +1,6 @@
 import {
   ICreateDailyEarning,
-  ICreateOrUpdateDailyEarnings,
+  ICreateOrUpdateDailyEarning,
 } from "@/data/protocols/dailyEarning/CreateDailyEarning";
 
 import { DailyEarningsModel } from "../../../domain/models/DailyEarnings";
@@ -16,5 +16,9 @@ export default interface IDailyEarningsRepository {
     page,
   }: IPagination): Promise<IPaginatedDailyEarnings>;
   create(data: ICreateDailyEarning[]): Promise<DailyEarningsModel[]>;
-  createOrUpdate(data: ICreateOrUpdateDailyEarnings): Promise<void>;
+  createOrUpdate({
+    id,
+    day,
+    total,
+  }: ICreateOrUpdateDailyEarning): Promise<void>;
 }

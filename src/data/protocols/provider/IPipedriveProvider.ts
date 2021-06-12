@@ -1,8 +1,7 @@
 import { IPipedrive } from "../../../domain/models/Pipedrivre";
 
 interface IResponsePipedrive {
-  toSave: IPipedrive[];
-  saved: IPipedrive[];
+  data: IPipedrive[];
 }
 
 export default interface IPipedriveProvider {
