@@ -1,7 +1,8 @@
 import { IListAllDailyEarnings } from "@/domain/useCases/ListAllDailyEarnings";
 
+import { ok } from "../helpers/http";
 import { IController } from "../protocols/controller";
-import { HttpResponse, ok, HttpRequest } from "../protocols/http";
+import { HttpResponse, HttpRequest } from "../protocols/Http";
 
 export class ListAllDailyEarningsController implements IController {
   constructor(

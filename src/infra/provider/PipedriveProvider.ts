@@ -15,10 +15,6 @@ export default class PipedriveProvider implements IPipedriveProvider {
         throw new Error(e.message);
       });
 
-    if (!data) {
-      throw new Error("Erro no Acesso ao Pipedrivre");
-    }
-
     const payload = data.data;
     if (payload === null) {
       return {

@@ -1,6 +1,8 @@
 import { ICreateBusiness } from "../../domain/useCases/CreateBusiness";
+import { IntegrationFailed } from "../errors/IntegrationFailed";
+import { badRequest, created } from "../helpers/http";
 import { IController } from "../protocols/controller";
-import { HttpResponse, created } from "../protocols/http";
+import { HttpResponse } from "../protocols/Http";
 
 export class CreateBusinessController implements IController {
   constructor(private readonly createBusinessUseCase: ICreateBusiness) {}
@@ -10,7 +12,7 @@ export class CreateBusinessController implements IController {
       await this.createBusinessUseCase.create();
       return created({ message: "Integration done successfully" });
     } catch (error) {
-      throw new Error("");
+      return badRequest(new IntegrationFailed());
     }
   }
 }

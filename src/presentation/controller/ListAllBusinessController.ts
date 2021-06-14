@@ -1,6 +1,7 @@
 import { IListAllBusiness } from "../../domain/useCases/ListAllBusiness";
+import { ok } from "../helpers/http";
 import { IController } from "../protocols/controller";
-import { HttpResponse, ok } from "../protocols/http";
+import { HttpResponse } from "../protocols/Http";
 
 class ListAllBusinessController implements IController {
   constructor(private readonly listAllBusiness: IListAllBusiness) {}
